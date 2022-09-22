@@ -4,3 +4,11 @@ This project is inspired by MAT 2019 question 6, which features questions about 
 Conversion to and from Flexadecimal is currently done via usize, however, this will quickly become insufficient as the maximum value is more than 10^500, this is because the Flexadecimal is currently implemented as an array of 255 u8s which means it could hold 255 * 255! + 254 * 254! + ...
 
 This crate currently supports addition overloading with flexadecimals, conversion from and to usize, and from a string, which supports hex.
+
+'''rust
+let test: usize = (Flexadecimal::from(500) + Flexadecimal::from("321")).into();
+assert_eq!(test, 523);
+
+assert_eq!(42usize, Flexadecimal::from(42).into());
+
+'''
