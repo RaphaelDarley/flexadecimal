@@ -9,14 +9,12 @@ impl ops::Add<Flexadecimal> for Flexadecimal {
     type Output = Flexadecimal;
 
     fn add(self, rhs: Flexadecimal) -> Self::Output {
-        // println!("add Flexadecimal with {:?} and {:?}", self, rhs);
         let mut acc = [0; 255];
         let mut carry: u8 = 0;
         let mut add: usize;
 
         for i in 0..255 {
             add = (self.inner[i] + rhs.inner[i] + carry) as usize;
-            // println!("add % (i + 2 = {})", add % (i + 2));
             acc[i] = (add % (i + 2)) as u8;
             carry = (add / (i + 2)) as u8;
         }
@@ -37,7 +35,6 @@ impl Flexadecimal {
 
 impl From<usize> for Flexadecimal {
     fn from(item: usize) -> Flexadecimal {
-        println!("from called with item: {}", item);
         let mut out = Flexadecimal::new();
         if item == 0 {
             return out;
@@ -48,9 +45,21 @@ impl From<usize> for Flexadecimal {
         }
         let col = highest_fac(item);
         let col_val = factorial(col);
-        println!("column val: {}", col_val);
         out.set_col(col, (item / (col_val)) as u8);
         out + Flexadecimal::from(item % col_val)
+    }
+}
+
+impl From<Flexadecimal> for usize {
+    fn from(item: Flexadecimal) -> usize {
+        let mut acc: usize = 0;
+        for (i, v) in item.inner.into_iter().enumerate() {
+            if v != 0 {
+                acc += v as usize * factorial(i + 1);
+            }
+        }
+
+        acc
     }
 }
 
@@ -59,7 +68,6 @@ fn highest_fac(num: usize) -> usize {
     while factorial(acc + 1) < num {
         acc += 1;
     }
-    println!("{}", acc);
     acc
 }
 

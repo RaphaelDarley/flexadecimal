@@ -1,5 +1,6 @@
 use flexadecimal::*;
 
 fn main() {
-    println!("Flexadecimal: {:?}", Flexadecimal::from(255));
+    let test: usize = (Flexadecimal::from(500) + Flexadecimal::from(500)).into();
+    println!("Flexadecimal: {:?}", test);
 }
