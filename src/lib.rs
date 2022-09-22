@@ -63,6 +63,21 @@ impl From<Flexadecimal> for usize {
     }
 }
 
+impl From<&str> for Flexadecimal {
+    fn from(item: &str) -> Flexadecimal {
+        let mut acc = Flexadecimal::new();
+        for (i, c) in item.chars().into_iter().rev().enumerate() {
+            let val = c.to_digit(16).unwrap() as usize;
+            let col_num = i + 1;
+            if val > col_num {
+                panic!("Invalid Flexadecimal literal")
+            }
+            acc.set_col(col_num, val as u8)
+        }
+        acc
+    }
+}
+
 fn highest_fac(num: usize) -> usize {
     let mut acc = 0;
     while factorial(acc + 1) < num {
