@@ -5,5 +5,6 @@ fn main() {
     println!("Flexadecimal: {:?}", test);
     assert_eq!(test, 523);
     assert_eq!(42usize, Flexadecimal::from(42).into());
-    println!("{}", String::from(Flexadecimal::from("522121")));
+    println!("num:{}", String::from(Flexadecimal::from("522121")));
+    println!("{}", Flexadecimal::from("522121"));
 }

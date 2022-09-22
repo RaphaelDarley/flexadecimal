@@ -1,8 +1,15 @@
+use core::fmt;
 use std::ops;
 
 #[derive(Debug)]
 pub struct Flexadecimal {
     inner: [u8; 255],
+}
+
+impl fmt::Display for Flexadecimal {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "〈{}〉", String::from(self))
+    }
 }
 
 impl ops::Add<Flexadecimal> for Flexadecimal {
@@ -75,6 +82,17 @@ impl From<&str> for Flexadecimal {
             acc.set_col(col_num, val as u8)
         }
         acc
+    }
+}
+
+impl From<&Flexadecimal> for String {
+    fn from(item: &Flexadecimal) -> String {
+        item.inner
+            .into_iter()
+            .rev()
+            .skip_while(|d| *d == 0)
+            .map(|d| char::from_digit(d as u32, 16).unwrap())
+            .collect()
     }
 }
 
