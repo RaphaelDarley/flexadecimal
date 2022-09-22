@@ -78,6 +78,17 @@ impl From<&str> for Flexadecimal {
     }
 }
 
+impl From<Flexadecimal> for String {
+    fn from(item: Flexadecimal) -> String {
+        item.inner
+            .into_iter()
+            .rev()
+            .skip_while(|d| *d == 0)
+            .map(|d| char::from_digit(d as u32, 16).unwrap())
+            .collect()
+    }
+}
+
 fn highest_fac(num: usize) -> usize {
     let mut acc = 0;
     while factorial(acc + 1) < num {
