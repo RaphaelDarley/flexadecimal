@@ -5,10 +5,10 @@ Conversion to and from Flexadecimal is currently done via usize, however, this w
 
 This crate currently supports addition overloading with flexadecimals, conversion from and to usize, and from a string, which supports hex.
 
-'''rust
+```rust
 let test: usize = (Flexadecimal::from(500) + Flexadecimal::from("321")).into();
 assert_eq!(test, 523);
 
 assert_eq!(42usize, Flexadecimal::from(42).into());
 
-'''
+```
